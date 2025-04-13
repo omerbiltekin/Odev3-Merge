@@ -5,11 +5,17 @@ import random
 pygame.init()
 
 # Renkler
-beyaz = (255, 255, 255)
-siyah = (0, 0, 0)
-kirmizi = (213, 50, 80)
-yesil = (0, 255, 0)
-mavi = (50, 153, 213)
+def hex_to_rgb(hex_color):
+    hex_color = hex_color.lstrip('#')
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
+beyaz = hex_to_rgb("#FFFFFF")
+siyah = hex_to_rgb("#000000")
+kirmizi = hex_to_rgb("#D32F2F")
+yesil  = hex_to_rgb("#66BB6A")
+mavi   = hex_to_rgb("#42A5F5")
+cim = hex_to_rgb("#A8DF8E") 
+yilan_rengi = hex_to_rgb("#2C2C2C") 
 
 # Ekran boyutu
 genislik = 600
@@ -28,12 +34,12 @@ pygame.display.set_caption("Yılan Oyunu - Python")
 saat = pygame.time.Clock()
 
 def skor_goster(skor):
-    deger = font.render("Skor: " + str(skor), True, siyah)
+    deger = font.render("Skor: " + str(skor), True, beyaz)
     ekran.blit(deger, [0, 0])
 
 def yilan(cizgi, yilan_listesi):
     for x in yilan_listesi:
-        pygame.draw.rect(ekran, siyah, [x[0], x[1], cizgi, cizgi])
+        pygame.draw.rect(ekran, yilan_rengi, [x[0], x[1], cizgi, cizgi])
 
 def mesaj(msg, renk, y=0):
     metin = font_buyuk.render(msg, True, renk)
@@ -44,7 +50,7 @@ def baslangic_ekrani():
     bekle = True
     while bekle:
         ekran.fill(beyaz)
-        mesaj("🐍 YILAN OYUNU", siyah, -50)
+        mesaj("YILAN OYUNU", siyah, -50)
         mesaj("Başlamak için SPACE'e bas", mavi, 10)
         mesaj("Çıkmak için Q tuşuna bas", kirmizi, 60)
         pygame.display.update()
@@ -115,8 +121,8 @@ def oyun():
 
         x1 += x1_degisiklik
         y1 += y1_degisiklik
-        ekran.fill(mavi)
-        pygame.draw.rect(ekran, yesil, [yemx, yemy, yilan_blok, yilan_blok])
+        ekran.fill (cim)
+        pygame.draw.rect(ekran, kirmizi, [yemx, yemy, yilan_blok, yilan_blok])
         yilan_kafa = []
         yilan_kafa.append(x1)
         yilan_kafa.append(y1)
